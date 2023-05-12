@@ -1,0 +1,38 @@
+table {
+    min-width: 98%;
+    position: relative;
+    margin: auto;
+    display: inline-block;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+
+th {
+    user-select: none;
+    border-right: 1px solid #BD7C2F;
+    cursor: pointer;
+    margin: 10px;
+    padding: 15px;
+    color: white;
+    background: rgb(10, 86, 199);
+}
+
+td {
+    overflow: hidden;
+    border-right: 1px solid #BD7C2F;
+    border-bottom: 1px solid #BD7C2F;
+    padding: 1%;
+    width: 100px;
+    color: white;
+    background-color: rgb(0, 0, 0, 0.3);
+}
+
+td a {
+    color: white;
+    background-color: rgb(4, 87, 196);
+    padding: 7px 17px;
+    border-radius: 7px;
+    cursor: pointer;
+    text-decoration: none;
+}

@@ -1,0 +1,44 @@
+.selectdiv select {
+    display: block;
+    height: 50px;
+    font-size: 16px;
+    padding-left: 10px;
+    color: #333;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -ms-word-break: normal;
+    word-break: normal;
+    width: 92.4%;
+    border-radius: 7px;
+}
+
+textarea {
+    height: 50px;
+    display: block;
+    font-size: 16px;
+    padding: 10px;
+    color: #333;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -ms-word-break: normal;
+    word-break: normal;
+    width: 90%;
+    border-radius: 7px;
+}
+
+
+input[type='file'] {
+    display: block;
+    font-size: 16px;
+    padding-left: 10px;
+    color: #333;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    -ms-word-break: normal;
+    word-break: normal;
+    width: 90%;
+    border-radius: 7px;
+}
