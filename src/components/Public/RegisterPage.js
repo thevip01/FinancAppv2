@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import '../assets/styles/LoginPage.css'
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const RegisterPage = () => {
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(LoginSchema)
     });
 
@@ -48,5 +48,6 @@ const RegisterPage = () => {
         </div>
     )
 }
+
 
 export default RegisterPage

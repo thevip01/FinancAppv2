@@ -26,25 +26,26 @@ export const LoginSchema = yup.object().shape({
             /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
             "Password must contain at least 8 characters, one uppercase, one number and one special case character"
         ),
+
     confirmPassword: yup.string()
         .required("Confirm Password is required")
         .oneOf([yup.ref('password')], 'Password must be same'),
 }).required();
 
 export const AddTransactionSchema = yup.object().shape({
-    transactionDate: yup.date()
+    Transaction_Date: yup.date()
         .required("Transaction Date required")
         .min(new Date(MinDate), "Date should be valid if greater than " + MinDate)
         .max(new Date(), "Can't select future date"),
-    MonthYear: yup.string()
+    Month_Year: yup.string()
         .required("Month Year required"),
-    TransactionType: yup.string()
+    Transaction_Type: yup.string()
         .required('Transaction Type is required'),
-    FromAccount: yup.string()
+    From_Account: yup.string()
         .required('From Account is required'),
-    ToAccount: yup.string()
+    To_Account: yup.string()
         .required('From Account is required')
-        .notOneOf([yup.ref('FromAccount')], "From Account and To Account can't be same"),
+        .notOneOf([yup.ref('From_Account')], "From Account and To Account can't be same"),
     Amount: yup.number()
         .required('Amount is required')
         .min(MinAmount, 'Amount Can\'t be less than ' + MinAmount)

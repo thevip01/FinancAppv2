@@ -5,15 +5,14 @@ import { useForm } from 'react-hook-form';
 import '../../assets/styles/AddNew.css'
 import { MonthData, TransactionType, FromAccount } from '../../utils/Constant';
 import '../../assets/styles/LoginPage.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { contextData } from '../../utils/DataContext';
 import getBase64 from 'getbase64data';
+import { ToastContainer, toast } from 'react-toastify';
 
 const AddNew = () => {
 
-
     const contextD = useContext(contextData)
-
     const setTransactionData = contextD['setTransactionData']
     const Transaction_Data = contextD['transactionData']
 
@@ -26,13 +25,24 @@ const AddNew = () => {
         resolver: yupResolver(AddTransactionSchema)
     });
 
-
+    console.log(errors);
     const myNavigator = useNavigate()
 
     var imgData = undefined;
     if (id) {
         imgData = Transaction_Data[id].Receipt;
     }
+
+    // Toast 
+    const notify = () => {
+        toast.success("Data Added success",
+            {
+                position: toast.POSITION.BOTTOM_CENTER,
+                hideProgressBar: true,
+                closeOnClick: true,
+            })
+    }
+
 
     const onSubmitADD = async (e) => {
         e.preventDefault()
@@ -46,15 +56,16 @@ const AddNew = () => {
                 DummyData2.Receipt = base64;
             }
             if (id) {
-
                 DummyData[id] = DummyData2;
             }
             else {
-
                 DummyData.push(DummyData2);
             }
-            setTransactionData(DummyData)
-            myNavigator('/transaction')
+            setTransactionData(DummyData);
+            notify();
+            setTimeout(() => {
+                myNavigator('/transaction');
+            }, 1000)
         }
         return true;
     }
@@ -65,6 +76,7 @@ const AddNew = () => {
             setShowImg(true)
         }
     }, [imgData])
+
     const removeImage = () => {
         setShowImg(true)
     }
@@ -123,20 +135,23 @@ const AddNew = () => {
         }
     }
 
+    console.log(errors['Transaction_Date']);
     return (
         <div>
             <h1>Add New Transaction</h1>
-            <form onSubmit={e => handleSubmit()(onSubmitADD(e))}>
-                {FieldGenerator('Transaction Date', 'transactionDate', 'date')}
-                {FieldGenerator('Month Year', 'MonthYear', 'Select', MonthData)}
-                {FieldGenerator('Transaction Type', 'TransactionType', 'Select', TransactionType)}
-                {FieldGenerator('From Account', 'FromAccount', 'Select', FromAccount)}
-                {FieldGenerator('To Account', 'ToAccount', 'Select', FromAccount)}
+            <Link to='/login'><button className='page button'>Logout</button></Link>
+            <form onSubmit={e => { handleSubmit(); onSubmitADD(e); }}>
+                {FieldGenerator('Transaction Date', 'Transaction_Date', 'date')}
+                {FieldGenerator('Month Year', 'Month_Year', 'Select', MonthData)}
+                {FieldGenerator('Transaction Type', 'Transaction_Type', 'Select', TransactionType)}
+                {FieldGenerator('From Account', 'From_Account', 'Select', FromAccount)}
+                {FieldGenerator('To Account', 'To_Account', 'Select', FromAccount)}
                 {FieldGenerator('Amount', 'Amount', 'text')}
                 {FieldGenerator('Receipt', 'Receipt', 'file')}
                 {FieldGenerator('Notes', 'Notes', 'textarea')}
                 {FieldGenerator('ADD', '', 'submit')}
             </form>
+            <ToastContainer />
         </div>
     )
 }

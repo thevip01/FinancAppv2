@@ -5,14 +5,16 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema, showPassword } from '../utils/validationHelper';
 import { contextData } from '../utils/DataContext';
 import { useNavigate } from 'react-router-dom';
-
+import { tokenGenerator } from '../utils/helper';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
 
     const userData = useContext(contextData);
     const Users = userData['userData']
+    const setCookie = userData['setCookie']
 
-    console.log(Users);
     const { register, handleSubmit, watch, formState: { errors } } = useForm({
         resolver: yupResolver(LoginSchema)
     });
@@ -20,29 +22,35 @@ const LoginPage = () => {
 
     const myNavigator = useNavigate()
 
+    const notify = () => {
+        toast.error("Invalid credential !!!",
+            {
+                position: toast.POSITION.BOTTOM_CENTER,
+                autoClose: 1000,
+                closeOnClick: true,
+            })
+    }
 
+    //Handle Login
     const handleSubmit1 = (e) => {
         e.preventDefault()
+        // eslint-disable-next-line
         let resErr = ''
-        console.log('in');
-        let isValid = Users.map((user) => {
+        // eslint-disable-next-line
+        let isValid = Users.some((user) => {
             if ((user.password === watch().password) && (user.email === watch().email)) {
                 return true;
             }
-            else if (user.Password !== watch().password) {
-                resErr = 'Credential Not Matched'
-
-            }
-            else if (user.Email !== watch().email) {
-                resErr = 'Credential Not Matched'
+            else {
+                return false;
             }
         })
-        console.log(errors.email);
-        if (isValid.includes(true)) {
+        if (isValid) {
+            setCookie('token', tokenGenerator())
             myNavigator('/transaction')
         }
         else {
-            console.log('Else');
+            notify()
         }
     }
 
@@ -72,8 +80,9 @@ const LoginPage = () => {
                     {errors.password && <span className='error-msg'>{errors.password.message}</span>}
                 </label>
                 <input type="submit" value="Login" />
+                <ToastContainer autoClose={1000} />
             </form>
-        </div>
+        </div >
     )
 }
 

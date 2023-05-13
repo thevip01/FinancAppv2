@@ -8,6 +8,7 @@ const ViewData = () => {
     const id = params['id'];
 
     const contextD = useContext(contextData)
+
     const AllData = contextD['transactionData']
     const cardData = AllData[id]
 
